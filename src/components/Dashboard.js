@@ -10,28 +10,26 @@ function Dashboard() {
 
 
   return (
-    <div class="main">
-    <div class="container-fluid px-5">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="table-responsive checkout">
-            <table class="table table-hover mt-5">
-              <thead class="table-dark border">
+      <div className="row">
+        <div className="col-md-12">
+          <div className="table-responsive checkout">
+            <table className="table table-hover mt-5">
+              <thead className="table-dark border">
                 <tr>
-                  <th scope="col" class="text-white">Product Id</th>
-                  <th class="text-white text-center">Product Name</th>
-                  <th class="text-white text-center">Price (per month)</th>
-                  <th class="text-white text-end"><span class="pe-4">Cart</span></th>
+                  <th scope="col" className="text-white">Product Id</th>
+                  <th className="text-white text-center">Product Name</th>
+                  <th className="text-white text-center">Price (per month)</th>
+                  <th className="text-white text-end"><span className="pe-4">Cart</span></th>
                 </tr>
               </thead>
-              <tbody class="border-top-0 border">
+              <tbody className="border-top-0 border">
                {products && products.map((product, index) => {
                 return (
-                  <tr>
-                  <td class="fw-bold">{product.PRODUCT_ID}</td>
+                  <tr >
+                  <td className="fw-bold">{product.PRODUCT_ID}</td>
                   <td align="center">{product.PRODUCT_NAME}</td>
                   <td align="center">{product.PRICE}</td>
-                  <td align="right"><button class="btn btn-secondary">Add to cart</button></td>
+                  <td align="right"><button className="btn btn-secondary">Add to cart</button></td>
                 </tr>
                 )
                })}
@@ -40,8 +38,6 @@ function Dashboard() {
           </div>
         </div>
       </div>
-    </div>
-  </div>
   )
 }
 
