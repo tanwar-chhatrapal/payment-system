@@ -1,22 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { AllProducts } from '../MockData/Products';
+import { Link } from 'react-router-dom'
 
 function Dashboard() {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
   const [cartProduct, setcartProduct] = useState([])
 
   useEffect(() => {
     setProducts(AllProducts)
+    const CartItem = JSON.parse(localStorage.getItem('product'))
+    setcartProduct(CartItem)
+  }, [AllProducts])
+
+  useEffect(() => {
     localStorage.setItem('product', JSON.stringify(cartProduct))
   }, [cartProduct])
-  
+
   const addToCart = (product) => {
-    setcartProduct([...cartProduct, product])
+    let tempA = []
+    let tempB = []
+    products.map(value => { 
+      if (value?.PRODUCT_ID == product?.PRODUCT_ID && !product.isAdded) {
+        tempA = [...tempA, { ...value, isAdded: true }]
+      }
+      else if (value?.PRODUCT_ID == product?.PRODUCT_ID && product.isAdded) {
+        tempA = [...tempA, { ...value, isAdded: false }]
+      }
+      else tempA.push(value)
+      setProducts(tempA)
+    })
+    tempA.map(p => p.isAdded && tempB.push(p))
+    setcartProduct(tempB)
   }
-    
   return (
     <div className="row">
       <div className="col-md-12">
+        <div className='mt-5'>
+          <Link to='/checkout'>Go to Cart</Link>
+        </div>
         <div className="table-responsive checkout">
           <table className="table table-hover mt-5">
             <thead className="table-dark border">
@@ -34,7 +55,7 @@ function Dashboard() {
                     <td className="fw-bold">{product.PRODUCT_ID}</td>
                     <td align="center">{product.PRODUCT_NAME}</td>
                     <td align="center">{product.PRICE}</td>
-                    <td align="right"><button className="btn btn-secondary" onClick={() => addToCart(product)}>Add to cart</button></td>
+                    <td align="right"><button className="btn btn-secondary" onClick={() => addToCart(product)}>{product?.isAdded ? 'Remove to cart' : 'Add to Cart'}</button></td>
                   </tr>
                 )
               })}
