@@ -16,7 +16,7 @@ function Dashboard() {
     localStorage.setItem('product', JSON.stringify(cartProduct))
   }, [cartProduct])
 
-  const addToCart = (product) => {
+  const handleCartItem = (product) => {
     let tempA = []
     let tempB = []
     products.map(value => { 
@@ -35,9 +35,12 @@ function Dashboard() {
   return (
     <div className="row">
       <div className="col-md-12">
-        <div className='mt-5'>
-          <Link to='/checkout'>Go to Cart</Link>
+       {cartProduct.length> 0 ?
+       ( <div className='mt-5'>
+          <Link to='/checkout'>Go To Cart</Link>
         </div>
+        ) :
+        null }
         <div className="table-responsive checkout">
           <table className="table table-hover mt-5">
             <thead className="table-dark border">
@@ -54,8 +57,8 @@ function Dashboard() {
                   <tr key={index}>
                     <td className="fw-bold">{product.PRODUCT_ID}</td>
                     <td align="center">{product.PRODUCT_NAME}</td>
-                    <td align="center">{product.PRICE}</td>
-                    <td align="right"><button className="btn btn-secondary" onClick={() => addToCart(product)}>{product?.isAdded ? 'Remove to cart' : 'Add to Cart'}</button></td>
+                    <td align="center">${product.PRICE}</td>
+                    <td align="right"><button className="btn btn-secondary" onClick={() => handleCartItem(product)}>{product?.isAdded ? 'Remove to cart' : 'Add to Cart'}</button></td>
                   </tr>
                 )
               })}
@@ -66,6 +69,5 @@ function Dashboard() {
     </div>
   )
 }
-
 
 export default Dashboard

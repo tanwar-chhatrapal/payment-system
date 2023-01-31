@@ -1,13 +1,12 @@
 import './App.css';
-import Dashboard from './components/Dashboard';
+import Dashboard from './Components/Dashboard';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Checkout from './components/Checkout';
-
+import Checkout from './Components/Checkout';
 
 function App() {
   return (
-    <div class="main">
-      <div class="container-fluid px-5">
+    <div className="main">
+      <div className="container-fluid px-5">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Dashboard />} />

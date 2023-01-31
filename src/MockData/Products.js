@@ -15,4 +15,15 @@ export const AllProducts = [
         PRODUCT_NAME: "8GB RAM SERVER",
         PRICE: "100"
     },
+    {
+        PRODUCT_ID : "serram10",
+        PRODUCT_NAME: "64B RAM SERVER",
+        PRICE: "5000"
+    },
+    {
+        PRODUCT_ID : "serram11",
+        PRODUCT_NAME: "128GB RAM SERVER",
+        PRICE: "5000"
+    },
+
 ]
