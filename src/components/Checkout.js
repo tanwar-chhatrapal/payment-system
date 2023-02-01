@@ -27,18 +27,23 @@ function Checkout() {
   const handleCoupanCode = (e) => {
     e.preventDefault()
     let isValid = false;
-    coupans.forEach(c => {
-      if (totalAmount > c.minAmount &&  totalAmount < c?.maxAmount && couponCode === c.code) {
-        setCouponDetail(c)
-        isValid = true;
-      } else if (totalAmount > c.minAmount && couponCode === c.code) {
-        setCouponDetail(c)
-        isValid = true;
+    if (coupanAmount > 0) {
+      alert('Coupon already applied')
+    } else {
+      coupans.forEach(c => {
+        if (totalAmount > c.minAmount && totalAmount < c?.maxAmount && couponCode === c.code) {
+          setCouponDetail(c)
+          isValid = true;
+        } else if (totalAmount > c.minAmount && couponCode === c.code) {
+          setCouponDetail(c)
+          isValid = true;
+        }
+      })
+      if (!isValid) {
+        alert('INVALID COUPON CODE')
       }
-    })
-    if(!isValid) {
-      alert('INVALID COUPON CODE')
     }
+    setCouponCode('')
   }
 
   let finaAmount = (totalAmount - coupanAmount).toFixed(2);
@@ -82,25 +87,22 @@ function Checkout() {
                 <td className="fw-bold">Sub Total</td>
                 <td className="fw-bold" align="right">${totalAmount}</td>
               </tr>
-                <tr>
-                  {coupanAmount === 0 ?
-                    (
-                      <td>
-                        <div className="input-group w-75">
-                          <input type="text" className="form-control border-dark" placeholder='Enter coupon code' aria-describedby="button-addon2" onChange={(e) => {setCouponCode(e.target.value)}}/>
-                          <button className="btn btn-secondary" type="button" id="button-addon2" onClick={handleCoupanCode}>Apply Promo</button>
-                        </div>
-                      </td>
-                    )
-                    :
-                    <td className="fw-bold">Discount</td>
-                  }
-                  <td className="fw-bold" align="right">${coupanAmount}({couponPercenatge}%)</td>
-                </tr>
-                <tr className="table-dark border">
-                  <td className="fw-bold">Total</td>
-                  <td className="fw-bold" align="right">${finaAmount}</td>
-                </tr>
+              <tr>
+                <td className="fw-bold">Discount</td>
+                <td className="fw-bold" align="right">${coupanAmount}({couponPercenatge}%)</td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="input-group">
+                    <input type="text" value={couponCode} className="form-control border-dark" placeholder='Enter coupon code' aria-describedby="button-addon2" onChange={(e) => { setCouponCode(e.target.value) }} />
+                    <button className="btn btn-secondary" type="button" id="button-addon2" onClick={handleCoupanCode}>Apply Promo</button>
+                  </div>
+                </td>
+              </tr>
+              <tr className="table-dark border">
+                <td className="fw-bold">Total</td>
+                <td className="fw-bold" align="right">${finaAmount}</td>
+              </tr>
             </tbody>
           </table>
         </div>
