@@ -1,6 +1,6 @@
-import Dashboard from './Components/Dashboard';
+import Dashboard from './components/Dashboard';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Checkout from './Components/Checkout';
+import Checkout from './components/Checkout';
 
 function App() {
   return (

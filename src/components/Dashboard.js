@@ -7,8 +7,10 @@ function Dashboard() {
   const [cartProduct, setcartProduct] = useState([])
 
   useEffect(() => {
+    if(products.length === 0) {
     setProducts(AllProducts)
-  }, [AllProducts])
+    }
+  }, [])
 
   useEffect(() => {
     localStorage.setItem('product', JSON.stringify(cartProduct))

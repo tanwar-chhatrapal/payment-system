@@ -3,26 +3,26 @@ import React, { useEffect, useState } from 'react'
 function Checkout() {
   const [cartProduct, setCartProduct] = useState();
   const [coupanAmount, setCoupanAmount] = useState(0);
-  const coupans = [{ coupan: 'PLSD123', value: 10 }, { coupan: 'PLSD456', value: 15 }];
+  const coupans = [{ code: 'PLSD123', value: 10 }, { code: 'PLSD456', value: 15 }];
 
   useEffect(() => {
-    let cartproduct = JSON.parse(localStorage.getItem('product'));
+    const cartproduct = JSON.parse(localStorage.getItem('product'));
     setCartProduct(cartproduct);
   }, [])
 
-  let totalAmount = cartProduct && cartProduct.reduce((previousValue, currentValue) => {
+  const totalAmount = cartProduct && cartProduct.reduce((previousValue, currentValue) => {
     return Number(previousValue) + Number(currentValue.PRICE)
   }, 0)
 
   let coupanCode = '';
   let total = totalAmount;
-  if (totalAmount > 5000 && totalAmount < 10000) coupanCode = ('PLSD123');
-  if (totalAmount > 10000) coupanCode = 'PLSD456';
+  if (totalAmount > 5000 && totalAmount < 10000) coupanCode = coupans[0].code;
+  if (totalAmount > 10000) coupanCode = coupans[1].code;
 
   const handleCoupanCode = (e) => {
     e.preventDefault()
     coupans.forEach(c => {
-      if (c.coupan === coupanCode) total = ((totalAmount * c.value) / 100).toFixed(2)
+      if (c.code === coupanCode) total = ((totalAmount * c.value) / 100).toFixed(2)
     })
     setCoupanAmount(total)
   }
