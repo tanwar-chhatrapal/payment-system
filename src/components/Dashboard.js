@@ -20,10 +20,10 @@ function Dashboard() {
     let tempA = []
     let tempB = []
     products.map(value => { 
-      if (value?.PRODUCT_ID == product?.PRODUCT_ID && !product.isAdded) {
+      if (value?.PRODUCT_ID === product?.PRODUCT_ID && !product.isAdded) {
         tempA = [...tempA, { ...value, isAdded: true }]
       }
-      else if (value?.PRODUCT_ID == product?.PRODUCT_ID && product.isAdded) {
+      else if (value?.PRODUCT_ID === product?.PRODUCT_ID && product.isAdded) {
         tempA = [...tempA, { ...value, isAdded: false }]
       }
       else tempA.push(value)
