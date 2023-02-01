@@ -8,6 +8,8 @@ You can Add to cart Item or Remove items.
 
 You can also apply promocode if the amount is more than $5000 and $10000.
 
+It will accept the valid promocode.
+
 # Git Repository
 git clone https://github.com/tanwar-chhatrapal/payment-system.git
 
