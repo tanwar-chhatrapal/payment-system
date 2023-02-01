@@ -27,3 +27,8 @@ export const AllProducts = [
     },
 
 ]
+
+export const coupans = [
+    { code: 'PLSD123', value: 10, minAmount: 5000, maxAmount: 10000 }, 
+    { code: 'PLSD456', value: 15, minAmount: 10000 }
+];
