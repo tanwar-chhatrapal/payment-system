@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { coupans } from '../MockData/Products';
 
 function Checkout() {
   const [cartProduct, setCartProduct] = useState();
   const [coupanAmount, setCoupanAmount] = useState(0);
-  const coupans = [{ code: 'PLSD123', value: 10 }, { code: 'PLSD456', value: 15 }];
+  const [couponCode, setCouponCode] = useState('');
+  const [couponPercenatge, setCouponPercentage] = useState(0);
 
   useEffect(() => {
     const cartproduct = JSON.parse(localStorage.getItem('product'));
@@ -14,18 +16,31 @@ function Checkout() {
     return Number(previousValue) + Number(currentValue.PRICE)
   }, 0)
 
-  let coupanCode = '';
   let total = totalAmount;
-  if (totalAmount > 5000 && totalAmount < 10000) coupanCode = coupans[0].code;
-  if (totalAmount > 10000) coupanCode = coupans[1].code;
+
+  const setCouponDetail = (c) => {
+    total = ((totalAmount * c.value) / 100).toFixed(2)
+    setCouponPercentage(c.value)
+    setCoupanAmount(total)
+  }
 
   const handleCoupanCode = (e) => {
     e.preventDefault()
+    let isValid = false;
     coupans.forEach(c => {
-      if (c.code === coupanCode) total = ((totalAmount * c.value) / 100).toFixed(2)
+      if (totalAmount > c.minAmount &&  totalAmount < c?.maxAmount && couponCode === c.code) {
+        setCouponDetail(c)
+        isValid = true;
+      } else if (totalAmount > c.minAmount && couponCode === c.code) {
+        setCouponDetail(c)
+        isValid = true;
+      }
     })
-    setCoupanAmount(total)
+    if(!isValid) {
+      alert('INVALID COUPON CODE')
+    }
   }
+
   let finaAmount = (totalAmount - coupanAmount).toFixed(2);
 
   return (
@@ -67,13 +82,12 @@ function Checkout() {
                 <td className="fw-bold">Sub Total</td>
                 <td className="fw-bold" align="right">${totalAmount}</td>
               </tr>
-              {coupanCode.length > 0 ?
-                (<tr>
+                <tr>
                   {coupanAmount === 0 ?
                     (
                       <td>
                         <div className="input-group w-75">
-                          <input type="text" className="form-control border-dark" placeholder={coupanCode} aria-describedby="button-addon2" />
+                          <input type="text" className="form-control border-dark" placeholder='Enter coupon code' aria-describedby="button-addon2" onChange={(e) => {setCouponCode(e.target.value)}}/>
                           <button className="btn btn-secondary" type="button" id="button-addon2" onClick={handleCoupanCode}>Apply Promo</button>
                         </div>
                       </td>
@@ -81,16 +95,12 @@ function Checkout() {
                     :
                     <td className="fw-bold">Discount</td>
                   }
-                  <td className="fw-bold" align="right">${coupanAmount}</td>
+                  <td className="fw-bold" align="right">${coupanAmount}({couponPercenatge}%)</td>
                 </tr>
-                )
-                :
-                null
-              }
-              <tr className="table-dark border">
-                <td className="fw-bold">Total</td>
-                <td className="fw-bold" align="right">${finaAmount}</td>
-              </tr>
+                <tr className="table-dark border">
+                  <td className="fw-bold">Total</td>
+                  <td className="fw-bold" align="right">${finaAmount}</td>
+                </tr>
             </tbody>
           </table>
         </div>

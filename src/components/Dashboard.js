@@ -37,7 +37,7 @@ function Dashboard() {
       <div className="col-md-12">
        {cartProduct.length> 0 ?
        ( <div className='mt-5'>
-          <Link to='/checkout'>Go To Cart</Link>
+          <Link to='/checkout'>Checkout</Link>
         </div>
         ) :
         null }
