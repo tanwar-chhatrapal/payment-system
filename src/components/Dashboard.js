@@ -8,8 +8,6 @@ function Dashboard() {
 
   useEffect(() => {
     setProducts(AllProducts)
-    const CartItem = JSON.parse(localStorage.getItem('product'))
-    setcartProduct(CartItem)
   }, [AllProducts])
 
   useEffect(() => {
